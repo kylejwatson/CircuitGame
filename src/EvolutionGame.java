@@ -36,10 +36,10 @@ public class EvolutionGame extends Application {
 			gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
 			if(selected[0] != null){
 				gc.setFill(Color.BLUE);
-				gc.fillRect(selected[0].getX()-5,selected[0].getY()-5,110,80);
+				gc.fillRect(selected[0].getX(),selected[0].getY(),selected[0].getAge()*selected[0].getWidth(),selected[0].getAge()*selected[0].getHeight());
 			}if(selected[1] != null){
 				gc.setFill(Color.BLUE);
-				gc.fillRect(selected[1].getX()-5,selected[1].getY()-5,110,80);
+				gc.fillRect(selected[1].getX(),selected[1].getY(),selected[1].getAge()*selected[1].getWidth(),selected[1].getAge()*selected[1].getHeight());
 			}
 			for(GameObject obj : list)
 			{
@@ -103,6 +103,7 @@ public class EvolutionGame extends Application {
 		EventHandler<MouseEvent> clickHandler = new EventHandler<MouseEvent>(){
 			@Override
 			public void handle(MouseEvent mouseEvent){
+				
 				System.out.println(mouseEvent.getX() + " " + mouseEvent.getY());
 				for(Cat cat : catList){
 					if(cat.pointCollides(mouseEvent.getX(), mouseEvent.getY())){

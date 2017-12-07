@@ -1,4 +1,5 @@
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 interface FactoryIF { 
 	GameObject createProduct(String discrim, double x, double y);
@@ -16,26 +17,11 @@ class Factory implements FactoryIF {
 	@Override
 	public GameObject createProduct(String discrim, double x, double y) {
 		if(discrim.equals("cat")){
-			String colour;
-			switch((int)(Math.random()*4)){
-			case 1:
-				colour = "black";
-				break;
-			case 2:
-				colour = "brown";
-				break;
-			case 3:
-				colour = "ginger";
-				break;
-			case 0:
-				colour = "grey";
-				break;
-			default:
-				colour = "brown";				
-			}
-			return new Cat(gc,(int)x,(int)y,colour,Math.random(),Math.random());
+			Color colour = new Color(Math.random(),Math.random(),Math.random(),1.0);
+			return new Cat(gc,(int)x,(int)y,colour);
+			
 		}else if(discrim.equals("saucer")){
-			return new Cat(gc, x, y,"brown",Math.random(),Math.random());
+			return new Cat(gc, x, y,Color.ALICEBLUE);
 		}
 		return null;
 	}
