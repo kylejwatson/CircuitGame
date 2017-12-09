@@ -8,24 +8,30 @@ public class Animal extends GameObject {
 	double height;
 	public Animal(GraphicsContext gc, double x, double y, Color colour) {
 		super(gc, x, y);
+		age = 1;
 		this.colour = colour;
 		// TODO Auto-generated constructor stub
 	}
 	public Animal clone(){
 		return new Animal(gc,x,y,colour);
 	}
-	public void inherit(Animal parent){
-		
-		
-		double red = (parent.colour.getRed() + colour.getRed())/2;
-		double blue = (parent.colour.getBlue() + colour.getBlue())/2;
-		double green = (parent.colour.getGreen() + colour.getGreen())/2;
-		
-		Color newColour = new Color(red,green,blue,1.0);
-		colour = newColour;
-		
-		x = (x+parent.x)/2;
-		y = (y+parent.y)/2;
+	public Animal inherit(Animal parent){
+		if(parent.getClass() == this.getClass()){
+			Animal offspring = this.clone();
+			
+			double red = (parent.colour.getRed() + colour.getRed())/2;
+			double blue = (parent.colour.getBlue() + colour.getBlue())/2;
+			double green = (parent.colour.getGreen() + colour.getGreen())/2;
+			
+			Color newColour = new Color(red,green,blue,1.0);
+			offspring.colour = newColour;
+			
+			offspring.x = (x+parent.x)/2;
+			offspring.y = (y+parent.y)/2;
+			System.out.println(offspring.getClass());
+			return offspring;
+		}
+		return null;
 	}
 
 	public boolean pointCollides(double x, double y){
@@ -39,26 +45,5 @@ public class Animal extends GameObject {
 		}
 		return false;
 	}
-	public double getX() {
-		// TODO Auto-generated method stub
-		return x;
-	}
-	public double getY() {
-		// TODO Auto-generated method stub
-		return y;
-	}
-	public double getAge() {
-		// TODO Auto-generated method stub
-		return age;
-	}
-	public double getWidth() {
-		// TODO Auto-generated method stub
-		return width;
-	}
-
-	public double getHeight() {
-		// TODO Auto-generated method stub
-		return height;
-	}
-
+	
 }

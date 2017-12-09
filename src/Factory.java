@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -16,13 +18,12 @@ class Factory implements FactoryIF {
 
 	@Override
 	public GameObject createProduct(String discrim, double x, double y) {
-		if(discrim.equals("cat")){
-			Color colour = new Color(Math.random(),Math.random(),Math.random(),1.0);
-			return new Cat(gc,(int)x,(int)y,colour);
-			
-		}else if(discrim.equals("saucer")){
-			return new Cat(gc, x, y,Color.ALICEBLUE);
+		switch(discrim){
+		case "battery":
+			return new Battery(gc,x,y);
+		case "bulb":
+			return new Bulb(gc,x,y);
 		}
-		return null;
+		return new GameObject(gc,0,0);
 	}
 }

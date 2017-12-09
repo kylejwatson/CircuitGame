@@ -19,13 +19,16 @@ public class EvolutionGame extends Application {
 	Pane root;
 	Scene scene;
 	Canvas canvas;
-	Button addCatButton;
+	Button batteryButton;
 	Button mateButton;
 	GraphicsContext gc;
 	ArrayList<GameObject> list = new ArrayList<GameObject>();
-	ArrayList<Cat> catList = new ArrayList<Cat>();
-	AnimalIF[] selected = new AnimalIF[2];
+	Component selected;
+	GameObject holding;
 	int select;
+	String discrim;
+	float power;
+	Component head;
 	Random rnd = new Random(System.currentTimeMillis());
 	int count=0;
 	AnimationTimer timer = new AnimationTimer() {
@@ -34,16 +37,26 @@ public class EvolutionGame extends Application {
 		public void handle(long now) {
 			gc.setFill(Color.WHITE);
 			gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
-			if(selected[0] != null){
-				gc.setFill(Color.BLUE);
-				gc.fillRect(selected[0].getX(),selected[0].getY(),selected[0].getAge()*selected[0].getWidth(),selected[0].getAge()*selected[0].getHeight());
-			}if(selected[1] != null){
-				gc.setFill(Color.BLUE);
-				gc.fillRect(selected[1].getX(),selected[1].getY(),selected[1].getAge()*selected[1].getWidth(),selected[1].getAge()*selected[1].getHeight());
-			}
 			for(GameObject obj : list)
 			{
 				obj.update();
+				if(obj instanceof Component){
+					Component comp = (Component) obj;
+					if(comp.nextComponent != null)
+						gc.strokeLine(comp.x + 30, comp.y+15, comp.nextComponent.x, comp.nextComponent.y+15);
+					if(comp.prevComponent != null){
+						gc.strokeLine(comp.x , comp.y+15, comp.prevComponent.x+30, comp.prevComponent.y+15);
+					}
+					
+				}
+			}
+			if(selected != null){
+				gc.setFill(Color.BLUE);
+				if(select == 1){
+					gc.fillRect(selected.x, selected.y+15, 5, 5);
+				}else{
+					gc.fillRect(selected.x+30, selected.y+15, 5, 5);
+				}
 			}
 		} };
 		
@@ -59,12 +72,12 @@ public class EvolutionGame extends Application {
 		scene=new Scene(root,800,600);
 		stage.setScene(scene);
 		stage.show();
-
-		addCatButton = new Button();
-		addCatButton.setText("Add Cat");
-		addCatButton.setLayoutX(10);
-		addCatButton.setLayoutY(50);
-		root.getChildren().add(addCatButton);
+		
+		batteryButton = new Button();
+		batteryButton.setText("Add Battery");
+		batteryButton.setLayoutX(10);
+		batteryButton.setLayoutY(50);
+		root.getChildren().add(batteryButton);
 		mateButton = new Button();
 		mateButton.setText("Mate");
 		mateButton.setLayoutX(10);
@@ -79,50 +92,76 @@ public class EvolutionGame extends Application {
 		root.getChildren().add(canvas);
 		
 		factory = new Factory(gc);
+		list.add(factory.createProduct("bulb", 100, 100));
+		list.add(factory.createProduct("bulb", 300, 100));
+		list.add(factory.createProduct("bulb", 200, 200));
+		list.add(factory.createProduct("battery", 200, 10));
 		
-		EventHandler<ActionEvent> catHandler = new EventHandler<ActionEvent>() {
+		EventHandler<ActionEvent> batteryHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				list.add(factory.createProduct("cat", Math.random()*700, Math.random()*600));
-				catList.add((Cat)list.get(list.size()-1));
+				holding = factory.createProduct("battery", 0, 0);
+				list.add(holding);
+				discrim = "holding";
 			}
 		};
-		addCatButton.setOnAction(catHandler);
+		batteryButton.setOnAction(batteryHandler);
 		EventHandler<ActionEvent> mateHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if(selected[1] != null){
-					Cat cat = (Cat)selected[0].clone();
-					cat.inherit(selected[1]);
-					list.add(cat);
-					catList.add(cat);
-				}
 			}
 		};
 		mateButton.setOnAction(mateHandler);
 		EventHandler<MouseEvent> clickHandler = new EventHandler<MouseEvent>(){
+
 			@Override
 			public void handle(MouseEvent mouseEvent){
-				
-				System.out.println(mouseEvent.getX() + " " + mouseEvent.getY());
-				for(Cat cat : catList){
-					if(cat.pointCollides(mouseEvent.getX(), mouseEvent.getY())){
-						if(selected[0] != cat && selected[1] != cat){
-							selected[select] = cat;
-							if(select == 1)
-								select = 0;
-							else
-								select = 1;
+				if(discrim == "holding"){
+					discrim = "none";
+				}else if(discrim == "none"){
+					for(GameObject go : list){
+						if(go instanceof Component){
+							Component comp = (Component)go;
+							if(selected != null){
+								boolean edge = comp.getEdge(mouseEvent.getX(), mouseEvent.getY(), select);
+								if(edge){
+									selected.setNode(comp,select);
+									selected = null;
+									comp.calculatePower(0,null);
+								}
+							}else{
+								boolean edgeLeft = comp.getEdge(mouseEvent.getX(), mouseEvent.getY(), 1);
+								boolean edgeRight = comp.getEdge(mouseEvent.getX(), mouseEvent.getY(), 2);
+								System.out.println(edgeLeft +" " + edgeRight);
+								if(edgeLeft){
+									selected = comp;
+									select = 2;
+								}else if(edgeRight){
+									selected = comp;
+									select = 1;
+								}
+							}
 						}
 					}
 				}
 			}
 		};
 		canvas.setOnMouseClicked(clickHandler);
+		EventHandler<MouseEvent> moveHandler = new EventHandler<MouseEvent>(){
+
+			@Override
+			public void handle(MouseEvent event) {
+				System.out.println(discrim);
+				if(discrim == "holding"){
+					holding.x = event.getX();
+					holding.y = event.getY();
+				}
+				
+			}
+			
+		};
+		canvas.setOnMouseMoved(moveHandler);
 		timer.start();
 
 	}
 }
-
-
-
