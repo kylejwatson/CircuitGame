@@ -2,10 +2,14 @@
 import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -52,12 +56,12 @@ public class EvolutionGame extends Application {
 				for(GameObject go : GameState.list){
 					if(go instanceof Component){
 						Component comp = (Component)go;
+						comp.contextMenu.hide();
 						if(selected != null){
 							boolean edge = comp.getEdge(mouseEvent.getX(), mouseEvent.getY(), select);
 							if(edge){
 								selected.setNode(comp,select);
 								selected = null;
-								comp.calculatePower(0,null);
 							}
 						}else{
 							boolean edgeLeft = comp.getEdge(mouseEvent.getX(), mouseEvent.getY(), 1);
@@ -96,7 +100,14 @@ public class EvolutionGame extends Application {
 			}			
 		}
 	};
-	
+	ChangeListener<Number> sliderHandler = new ChangeListener<Number>(){
+
+		@Override
+		public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+			GameState.setVolume(new_val.floatValue());
+		}
+		
+	};
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -109,12 +120,13 @@ public class EvolutionGame extends Application {
 		stage.setScene(scene);
 		stage.show();
 
-		root.getChildren().addAll(new AddButton("battery",10, 50),new AddButton("switch",10, 80),new AddButton("buzzer",10, 110));
-		canvas = new Canvas(700,600);
+		root.getChildren().addAll(new AddButton("battery",10, 50),new AddButton("switch",10, 80)
+				,new AddButton("buzzer",10, 110), new AddButton("motor",10,140));
+		canvas = new Canvas(600,600);
 		gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
-		canvas.setLayoutX(100);
+		canvas.setLayoutX(200);
 		root.getChildren().add(canvas);
 		
 		GameState.factory = new Factory(gc);
@@ -126,6 +138,20 @@ public class EvolutionGame extends Application {
 		canvas.setOnMouseClicked(clickHandler);
 		canvas.setOnContextMenuRequested(contextHandler);
 		canvas.setOnMouseMoved(moveHandler);
+		Label label = new Label("Volume:");
+		label.setLayoutX(10);
+		label.setLayoutY(10);
+		Slider slider = new Slider();
+		slider.setMin(0);
+		slider.setMax(100);
+		slider.setValue(100);
+		slider.setLayoutX(10);
+		slider.setLayoutY(30);
+		slider.valueProperty().addListener(sliderHandler);
+		GameState.setVolume(100);
+		
+		//slider.set
+		root.getChildren().addAll(slider,label);
 		timer.start();
 
 	}

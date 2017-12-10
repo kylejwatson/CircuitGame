@@ -27,6 +27,8 @@ class Factory implements FactoryIF {
 			return new Switch(gc,x,y);
 		case "buzzer":
 			return new Buzzer(gc,x,y);
+		case "motor":
+			return new Motor(gc,x,y);
 		}
 		return new GameObject(gc,0,0);
 	}

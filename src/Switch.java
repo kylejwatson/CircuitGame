@@ -1,4 +1,7 @@
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 
 public class Switch extends Component {
@@ -8,7 +11,15 @@ public class Switch extends Component {
 		super(gc, x, y);
 		switchedOn = true;
 		img = new Image("res/switchon.png");
-		// TODO Auto-generated constructor stub
+		MenuItem switchButton = new MenuItem("Flip Switch");
+		switchButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				toggle();
+			}
+		});
+		contextMenu.getItems().add(switchButton);
 	}
 	
 	public void toggle(){
@@ -18,11 +29,7 @@ public class Switch extends Component {
 		}else{
 			img = new Image("res/switchoff.png");
 		}
-	}
-
-	public void rightClick(double x, double y){
-		if(click(x,y))
-			toggle();
+		calculatePower(0,null);
 	}
 	
 	public float calculatePower(float curPower, Component startNode){
