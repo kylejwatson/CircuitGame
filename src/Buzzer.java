@@ -8,12 +8,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Buzzer extends Component {
+
+    static Image soundImg = new Image("res/sound.png");
 	static byte[] buf = new byte[ 1 ];
 	static AudioFormat af= new AudioFormat( (float )44100, 8, 1, true, false );
     static SourceDataLine sdl;
     static float volume = 1;
     static Runnable soundthread = new Runnable(){
-
 		@Override
 		public void run() {
 
@@ -58,7 +59,7 @@ public class Buzzer extends Component {
 			t = new Thread(soundthread);
 			t.start();
 		}
-		
+		gc.drawImage(soundImg, x, y-power,30,power);
 	}
 	
 	public void setPower(float power){

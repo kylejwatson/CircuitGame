@@ -11,9 +11,9 @@ public class Bulb extends Component {
 	}
 	
 	public void update(){
-		super.update();
-		gc.setFill(new Color(1,1,0,power/50));
+		gc.setFill(new Color(1,1,0,power/20));
 		gc.fillOval(x+5, y+5, 20, 20);
+		super.update();
 	}
 
 	public float calculatePower(float curPower, Component startNode){

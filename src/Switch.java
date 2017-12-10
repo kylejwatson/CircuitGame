@@ -21,7 +21,7 @@ public class Switch extends Component {
 	}
 
 	public void rightClick(double x, double y){
-		if(x > this.x && x < this.x+30 && y > this.y && y < this.y + 30)
+		if(click(x,y))
 			toggle();
 	}
 	
