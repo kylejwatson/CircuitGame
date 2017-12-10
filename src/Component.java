@@ -10,11 +10,11 @@ public abstract class Component extends GameObject {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setNode(Component comp, int select){
-		if(select == 2 && prevComponent == null){
+	public void setNode(Component comp, int select ){
+		if(select == 2 && prevComponent == null && comp.nextComponent == null){
 			comp.nextComponent = this;
 			prevComponent = comp;
-		}else if(select == 1 && nextComponent == null){
+		}else if(select == 1 && nextComponent == null && comp.prevComponent == null){
 			comp.prevComponent = this;
 			nextComponent = comp;
 		}
@@ -54,5 +54,8 @@ public abstract class Component extends GameObject {
 		return nextComponent.calculatePower(curPower, startNode);
 	}
 	
+	public void rightClick(double x, double y){
+		//add a right click menu for deleting moving or destroying connections
+	}
 
 }

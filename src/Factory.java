@@ -23,6 +23,10 @@ class Factory implements FactoryIF {
 			return new Battery(gc,x,y);
 		case "bulb":
 			return new Bulb(gc,x,y);
+		case "switch":
+			return new Switch(gc,x,y);
+		case "buzzer":
+			return new Buzzer(gc,x,y);
 		}
 		return new GameObject(gc,0,0);
 	}
