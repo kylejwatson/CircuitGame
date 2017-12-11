@@ -33,7 +33,7 @@ public class EvolutionGame extends Application {
 		public void handle(long now) {
 			gc.setFill(Color.WHITE);
 			gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
-			for(GameObject obj : GameState.list)
+			for(GameObject obj : GameState.getList())
 			{
 				obj.update();
 			}
@@ -50,10 +50,10 @@ public class EvolutionGame extends Application {
 	EventHandler<MouseEvent> clickHandler = new EventHandler<MouseEvent>(){
 		@Override
 		public void handle(MouseEvent mouseEvent){
-			if(GameState.holding || mouseEvent.getButton() == MouseButton.SECONDARY){
-				GameState.holding = false;
-			}else if(!GameState.holding){
-				for(GameObject go : GameState.list){
+			if(GameState.isHolding() || mouseEvent.getButton() == MouseButton.SECONDARY){
+				GameState.dropHolding();
+			}else if(!GameState.isHolding()){
+				for(GameObject go : GameState.getList()){
 					if(go instanceof Component){
 						Component comp = (Component)go;
 						comp.contextMenu.hide();
@@ -83,7 +83,7 @@ public class EvolutionGame extends Application {
 
 		@Override
 		public void handle(ContextMenuEvent event) {
-			for(GameObject go : GameState.list){
+			for(GameObject go : GameState.getList()){
 				if(go instanceof Component){
 					((Component) go).rightClick(event);
 				}
@@ -94,9 +94,9 @@ public class EvolutionGame extends Application {
 	EventHandler<MouseEvent> moveHandler = new EventHandler<MouseEvent>(){
 		@Override
 		public void handle(MouseEvent event) {
-			if(GameState.holding){
-				GameState.go.x = event.getX();
-				GameState.go.y = event.getY();
+			if(GameState.isHolding()){
+				GameState.getHeldComponent().x = event.getX();
+				GameState.getHeldComponent().y = event.getY();
 			}			
 		}
 	};
@@ -129,11 +129,14 @@ public class EvolutionGame extends Application {
 		canvas.setLayoutX(200);
 		root.getChildren().add(canvas);
 		
-		GameState.factory = new Factory(gc);
-		GameState.list.add(GameState.factory.createProduct("bulb", 100, 100));
-		GameState.list.add(GameState.factory.createProduct("bulb", 300, 100));
-		GameState.list.add(GameState.factory.createProduct("bulb", 200, 200));
-		GameState.list.add(GameState.factory.createProduct("battery", 200, 10));
+		GameState.setGraphicsContext(gc);
+		
+		//Starting components
+		GameState.getFactory().createProduct("bulb", 100, 100);
+		GameState.getFactory().createProduct("bulb", 300, 100);
+		GameState.getFactory().createProduct("bulb", 200, 200);
+		GameState.getFactory().createProduct("battery", 200, 10);
+		GameState.dropHolding();
 		
 		canvas.setOnMouseClicked(clickHandler);
 		canvas.setOnContextMenuRequested(contextHandler);
@@ -144,11 +147,11 @@ public class EvolutionGame extends Application {
 		Slider slider = new Slider();
 		slider.setMin(0);
 		slider.setMax(100);
-		slider.setValue(100);
+		slider.setValue(20);
 		slider.setLayoutX(10);
 		slider.setLayoutY(30);
 		slider.valueProperty().addListener(sliderHandler);
-		GameState.setVolume(100);
+		GameState.setVolume(20);
 		
 		//slider.set
 		root.getChildren().addAll(slider,label);

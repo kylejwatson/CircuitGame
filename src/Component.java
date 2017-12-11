@@ -21,8 +21,7 @@ public abstract class Component extends GameObject {
 
 			@Override
 			public void handle(ActionEvent event) {
-				GameState.holding = true;
-				GameState.go = thisComp;
+				GameState.setHeldComponent(thisComp);
 			}
 		});
 		MenuItem deleteLeftButton = new MenuItem("< Remove Left Wire");
@@ -57,7 +56,7 @@ public abstract class Component extends GameObject {
 
 			@Override
 			public void handle(ActionEvent event) {
-				GameState.list.remove(thisComp);
+				GameState.getList().remove(thisComp);
 			}
 		});
 

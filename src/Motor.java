@@ -14,7 +14,8 @@ public class Motor extends Component {
 		double xpoint = Math.cos(angle)*10;
 		double ypoint = Math.sin(angle)*10;
 		gc.setLineWidth(2);
-		gc.strokeLine(xpoint + x+15, ypoint + y+15, x - xpoint+15, y - ypoint+15);
+		gc.strokeLine(xpoint + x+15, ypoint + y+15, xpoint*1.5 + x+15, ypoint*1.5 + y+15);
+		gc.strokeLine(x+15 - xpoint, y+15 - ypoint,x+15 - xpoint*1.5, y+15 - ypoint*1.5);
 		gc.setLineWidth(1);
 		super.update();
 	}

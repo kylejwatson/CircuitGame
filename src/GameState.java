@@ -5,19 +5,45 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public abstract class GameState{
-	static Component go;
-	static boolean holding = false;
-	static ArrayList<GameObject> list = new ArrayList<GameObject>();
-	static float volume;
-	static byte[] buf = new byte[ 1 ];
-	static AudioFormat af= new AudioFormat( (float )44100, 8, 1, true, false );
-    static SourceDataLine sdl;
-    
-    
-	static Runnable soundThread;
+	private static Component heldComponent;
+	private static boolean holding = false;
+	private static ArrayList<GameObject> list = new ArrayList<GameObject>();
+	private static float volume;
+    private static SourceDataLine sdl;
+	private static Factory factory;
+	private static Runnable soundThread;
+
+	public static ArrayList<GameObject> getList(){
+		return list;
+	}
+	
+	public static Factory getFactory(){
+		return factory;
+	}
+	
+	public static Component getHeldComponent(){
+		return heldComponent;
+	}
+	
+	public static void setHeldComponent(Component co){
+		heldComponent = co;
+		holding = true;
+	}
+	
+	public static  boolean isHolding(){
+		return holding;
+	}
+	
+	public static void dropHolding(){
+		holding = false;
+	}
+	
 	static void setVolume(float volume){
-		System.out.println(GameState.volume = volume);
+		byte[] buf = new byte[ 1 ];
+		AudioFormat af= new AudioFormat( (float )44100, 8, 1, true, false );
 		if(sdl == null){
 		    try {
 				sdl = AudioSystem.getSourceDataLine( af );
@@ -51,6 +77,14 @@ public abstract class GameState{
 			
 		};
 	}
-	
-	static Factory factory;
+
+	public static void setGraphicsContext(GraphicsContext gc) {
+		factory = new Factory(gc);
+		
+	}
+
+	public static Runnable getSoundThread() {
+		// TODO Auto-generated method stub
+		return soundThread;
+	}
 }
