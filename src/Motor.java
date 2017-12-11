@@ -1,13 +1,12 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
 public class Motor extends Component {
-	float angle = 0;
+	private float angle = 0;
 	public Motor(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
 		img = new Image("res/motor.png");
-		// TODO Auto-generated constructor stub
+		setPowerCons(new ConsumesPower());
 	}
 	
 	public void update(){
@@ -19,11 +18,4 @@ public class Motor extends Component {
 		gc.setLineWidth(1);
 		super.update();
 	}
-
-	public float calculatePower(float curPower, Component startNode){
-		if(startNode != null)
-			curPower -= 3;
-		return super.calculatePower(curPower, startNode);
-	}
-
 }

@@ -5,8 +5,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-import javafx.scene.image.Image;
-
 public abstract class GameState{
 	static Component go;
 	static boolean holding = false;

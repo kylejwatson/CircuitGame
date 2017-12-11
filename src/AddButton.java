@@ -4,10 +4,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 public class AddButton extends Button {
-
-	//public AddButton() {
-		// TODO Auto-generated constructor stub
-	//}
 	
 	public AddButton(String text,float x, float y) {
 		super();
@@ -25,13 +21,6 @@ public class AddButton extends Button {
 		setText(text);
 		setLayoutX(x);
 		setLayoutY(y);
-		
-		// TODO Auto-generated constructor stub
-	}
-
-	public AddButton(String text, Node graphic) {
-		super(text, graphic);
-		// TODO Auto-generated constructor stub
 	}
 
 }

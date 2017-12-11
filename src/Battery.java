@@ -6,12 +6,6 @@ public class Battery extends Component {
 	public Battery(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
 		img = new Image("res/battery.png");
+		setPowerCons(new AddsPower());
 	}
-
-	public float calculatePower(float curPower, Component startNode){
-		if(startNode != null)
-			curPower += 10;
-		return super.calculatePower(curPower, startNode);
-	}
-
 }

@@ -6,11 +6,12 @@ import javafx.scene.image.Image;
 
 public class Switch extends Component {
 
-	boolean switchedOn;
+	private boolean switchedOn;
 	public Switch(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
 		switchedOn = true;
 		img = new Image("res/switchon.png");
+		setPowerCons(new NoPower());
 		MenuItem switchButton = new MenuItem("Flip Switch");
 		switchButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -29,7 +30,7 @@ public class Switch extends Component {
 		}else{
 			img = new Image("res/switchoff.png");
 		}
-		calculatePower(0,null);
+		resetPower();
 	}
 	
 	public float calculatePower(float curPower, Component startNode){

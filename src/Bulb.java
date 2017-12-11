@@ -8,17 +8,12 @@ public class Bulb extends Component {
 		super(gc, x, y);
 		img = new Image("res/bulb.png");
 		// TODO Auto-generated constructor stub
+		setPowerCons(new ConsumesPower());
 	}
 	
 	public void update(){
 		gc.setFill(new Color(1,1,0,power/20));
 		gc.fillOval(x+5, y+5, 20, 20);
 		super.update();
-	}
-
-	public float calculatePower(float curPower, Component startNode){
-		if(startNode != null)
-			curPower -= 3;
-		return super.calculatePower(curPower, startNode);
 	}
 }

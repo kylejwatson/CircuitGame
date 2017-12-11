@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-
+//Factory Design Pattern
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 interface FactoryIF { 
 	GameObject createProduct(String discrim, double x, double y);
@@ -9,7 +7,7 @@ interface FactoryIF {
 
 class Factory implements FactoryIF {
 
-	GraphicsContext gc;
+	private GraphicsContext gc;
 	
 	public Factory(GraphicsContext gc) {
 		super();

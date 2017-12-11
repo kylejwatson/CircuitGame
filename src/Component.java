@@ -4,17 +4,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.Window;
 
 public abstract class Component extends GameObject {
 
-	Component nextComponent;
-	Component prevComponent;
-	float power;
-	ContextMenu contextMenu = new ContextMenu();
-
+	protected Component nextComponent;
+	protected Component prevComponent;
+	protected float power;
+	protected ContextMenu contextMenu = new ContextMenu();
+	protected PowerCons powerCons;
 	public Component(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
 		Component thisComp = this;
@@ -34,9 +32,9 @@ public abstract class Component extends GameObject {
 			public void handle(ActionEvent event) {
 				if(prevComponent != null){
 					prevComponent.nextComponent = null;
-					prevComponent.calculatePower(0, null);
+					prevComponent.resetPower();
 					prevComponent = null;
-					calculatePower(0,null);
+					resetPower();
 				}
 			}
 		});
@@ -47,9 +45,10 @@ public abstract class Component extends GameObject {
 			public void handle(ActionEvent event) {
 				if(nextComponent != null){
 					nextComponent.prevComponent = null;
-					nextComponent.calculatePower(0, null);
+					nextComponent.resetPower();
 					nextComponent = null;
-					calculatePower(0,null);
+					resetPower();
+					
 				}
 			}
 		});
@@ -72,11 +71,11 @@ public abstract class Component extends GameObject {
 			if(select == 2 && prevComponent == null && comp.nextComponent == null){
 				comp.nextComponent = this;
 				prevComponent = comp;
-				comp.calculatePower(0,null);
+				comp.resetPower();
 			}else if(select == 1 && nextComponent == null && comp.prevComponent == null){
 				comp.prevComponent = this;
 				nextComponent = comp;
-				comp.calculatePower(0,null);
+				comp.resetPower();
 			}
 		}
 	}
@@ -102,20 +101,26 @@ public abstract class Component extends GameObject {
 				nextComponent.setPower(power);
 		}
 	}
-
-	public float calculatePower(float curPower, Component startNode){
+	
+	public void resetPower(){
 		if(nextComponent == null || prevComponent == null){
 			setPower(0);
-			return 0;
+		}else{
+			calculatePower(0,null);
 		}
+	}
+
+	protected float calculatePower(float curPower, Component startNode){
 		if(this == startNode){
 			System.out.println(curPower + " " + this.getClass());
 			if(curPower < 0)
 				curPower = 0;
 			setPower(curPower);
 			return curPower;
-		}else if(startNode == null){
-			startNode = this;
+		}else{
+			if(startNode == null)
+				startNode = this;
+			curPower = consumePower(curPower);
 		}
 		System.out.println(getClass() + " " +curPower);
 		return nextComponent.calculatePower(curPower, startNode);
@@ -143,7 +148,15 @@ public abstract class Component extends GameObject {
 		if(click(event.getX(), event.getY()))
 			contextMenu.show(gc.getCanvas(),event.getScreenX(),event.getSceneY());;
 	}
-
+	
+	private float consumePower(float curPower){
+		return powerCons.consumePower(curPower);
+	}
+	
+	protected void setPowerCons(PowerCons powerCons){
+		this.powerCons = powerCons;
+	}
+	
 	public boolean click(double x, double y){
 		if(x > this.x && x < this.x+30 && y > this.y && y < this.y + 30)
 			return true;
