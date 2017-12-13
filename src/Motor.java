@@ -9,7 +9,7 @@ public class Motor extends Component {
 		setPowerCons(new ConsumesPower());
 	}
 	
-	public void update(){
+	public void spin(){
 		angle += power/100;
 		double xpoint = Math.cos(angle)*10;
 		double ypoint = Math.sin(angle)*10;
@@ -17,6 +17,10 @@ public class Motor extends Component {
 		gc.strokeLine(xpoint + x+15, ypoint + y+15, xpoint*1.5 + x+15, ypoint*1.5 + y+15);
 		gc.strokeLine(x+15 - xpoint, y+15 - ypoint,x+15 - xpoint*1.5, y+15 - ypoint*1.5);
 		gc.setLineWidth(1);
+	}
+	
+	public void update(){
+		spin();
 		super.update();
 	}
 }

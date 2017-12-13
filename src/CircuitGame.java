@@ -1,5 +1,4 @@
 
-import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -17,22 +16,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class EvolutionGame extends Application {
-	Pane root;
-	Scene scene;
-	Canvas canvas;
-	GraphicsContext gc;
-	Component selected;
-	int select;
-	float power;
-	Component head;
-	Random rnd = new Random(System.currentTimeMillis());
-	int count=0;
-	AnimationTimer timer = new AnimationTimer() {
+public class CircuitGame extends Application {
+	
+	private Component selected;
+	private GraphicsContext gc;
+	private int select;
+	private AnimationTimer timer = new AnimationTimer() {
 		@Override
 		public void handle(long now) {
 			gc.setFill(Color.WHITE);
-			gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
+			gc.fillRect(0,0,gc.getCanvas().getWidth(),gc.getCanvas().getHeight());
 			for(GameObject obj : GameState.getGameState().getList())
 			{
 				obj.update();
@@ -47,7 +40,7 @@ public class EvolutionGame extends Application {
 			}
 		} 
 	};
-	EventHandler<MouseEvent> clickHandler = new EventHandler<MouseEvent>(){
+	private EventHandler<MouseEvent> clickHandler = new EventHandler<MouseEvent>(){
 		@Override
 		public void handle(MouseEvent mouseEvent){
 			GameState.getGameState().dropHolding();
@@ -78,11 +71,11 @@ public class EvolutionGame extends Application {
 			}
 		}
 	};
-	EventHandler<ContextMenuEvent> contextHandler = new EventHandler<ContextMenuEvent>(){
+	private EventHandler<ContextMenuEvent> contextHandler = new EventHandler<ContextMenuEvent>(){
 
 		@Override
 		public void handle(ContextMenuEvent event) {
-			for(GameObject go : GameState.getGameState().getGameState().getList()){
+			for(GameObject go : GameState.getGameState().getList()){
 				if(go instanceof Component){
 					((Component) go).rightClick(event);
 				}
@@ -90,13 +83,13 @@ public class EvolutionGame extends Application {
 		}
 		
 	};
-	EventHandler<MouseEvent> moveHandler = new EventHandler<MouseEvent>(){
+	private EventHandler<MouseEvent> moveHandler = new EventHandler<MouseEvent>(){
 		@Override
 		public void handle(MouseEvent event) {
 			GameState.getGameState().moveHeldComponent(event.getX(),event.getY()); 
 		}
 	};
-	ChangeListener<Number> sliderHandler = new ChangeListener<Number>(){
+	private ChangeListener<Number> sliderHandler = new ChangeListener<Number>(){
 
 		@Override
 		public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
@@ -111,13 +104,13 @@ public class EvolutionGame extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		root=new Pane();
-		scene=new Scene(root,800,600);
+		Pane root=new Pane();
+		Scene scene=new Scene(root,800,600);
 		stage.setScene(scene);
 		stage.show();
 		root.getChildren().addAll(new AddButton("battery",10, 50),new AddButton("switch",10, 80)
 				,new AddButton("buzzer",10, 110), new AddButton("motor",10,140));
-		canvas = new Canvas(600,600);
+		Canvas canvas = new Canvas(600,600);
 		gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
@@ -131,11 +124,12 @@ public class EvolutionGame extends Application {
 		Factory.getFactory().createProduct("bulb", 300, 100);
 		Factory.getFactory().createProduct("bulb", 200, 200);
 		Factory.getFactory().createProduct("battery", 200, 10);
-		GameState.getGameState().getGameState().dropHolding();
+		GameState.getGameState().dropHolding();
 		
 		canvas.setOnMouseClicked(clickHandler);
 		canvas.setOnContextMenuRequested(contextHandler);
 		canvas.setOnMouseMoved(moveHandler);
+		
 		Label label = new Label("Volume:");
 		label.setLayoutX(10);
 		label.setLayoutY(10);

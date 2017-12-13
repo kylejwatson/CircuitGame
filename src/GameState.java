@@ -1,12 +1,4 @@
 import java.util.ArrayList;
-
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
-
-import javafx.scene.canvas.GraphicsContext;
-
 public class GameState{
 	private Component heldComponent;
 	private ArrayList<GameObject> list;

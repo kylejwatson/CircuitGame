@@ -1,9 +1,4 @@
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -18,11 +13,15 @@ public class Buzzer extends Component {
 		img = new Image("res/buzzer.png");
 		setPowerCons(new ConsumesPower());
 	}
-
-	public void update(){
-		super.update();
+	
+	public void buzz(){
 		if(power != 0)
 			SoundThread.getSoundThread().playSound();
-		gc.drawImage(soundImg, x, y-power,30,power);
+		gc.drawImage(soundImg, x, y-power,30,power);		
+	}
+
+	public void update(){
+		buzz();
+		super.update();
 	}
 }
