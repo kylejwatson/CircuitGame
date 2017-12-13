@@ -5,10 +5,12 @@ import javax.sound.sampled.SourceDataLine;
 
 public class SoundThread implements Runnable {
 	private SourceDataLine sdl;
-	private AudioFormat af= new AudioFormat( (float )44100, 8, 1, true, false );
+	private AudioFormat af;
 	private float volume;
+	private Thread t;
 	private static SoundThread instance;
 	private SoundThread() {
+		af = new AudioFormat( (float )44100, 8, 1, true, false );
 		 try {
 				sdl = AudioSystem.getSourceDataLine( af );
 			
@@ -16,11 +18,18 @@ public class SoundThread implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		 t = new Thread(instance);
 	}
 	public static SoundThread getSoundThread(){
 		if(instance == null)
 			instance = new SoundThread();
 		return instance;
+	}
+	public void playSound(){
+		if(!t.isAlive()){
+			t = new Thread(instance);
+			t.start();
+		}
 	}
 	public void setVolume(float volume){
 		this.volume = volume;

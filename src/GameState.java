@@ -11,10 +11,6 @@ public class GameState{
 	private Component heldComponent;
 	private boolean holding = false;
 	private ArrayList<GameObject> list;
-	//private float volume;
-    //private SourceDataLine sdl;
-	private Factory factory;
-	//private SoundThread soundThread;
 	private static GameState instance;
 	private GameState(){
 		 list = new ArrayList<GameObject>();

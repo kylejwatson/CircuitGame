@@ -11,7 +11,6 @@ public class Buzzer extends Component {
 
 
 	private Image soundImg = new Image("res/sound.png");
-	private static Thread t = new Thread(SoundThread.getSoundThread());
 	
 	public Buzzer(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
@@ -22,10 +21,8 @@ public class Buzzer extends Component {
 
 	public void update(){
 		super.update();
-		if(!t.isAlive() && power != 0){
-			t = new Thread(SoundThread.getSoundThread());
-			t.start();
-		}
+		if(power != 0)
+			SoundThread.getSoundThread().playSound();
 		gc.drawImage(soundImg, x, y-power,30,power);
 	}
 }
