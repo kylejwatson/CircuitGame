@@ -50,9 +50,8 @@ public class EvolutionGame extends Application {
 	EventHandler<MouseEvent> clickHandler = new EventHandler<MouseEvent>(){
 		@Override
 		public void handle(MouseEvent mouseEvent){
-			if(GameState.getGameState().isHolding() || mouseEvent.getButton() == MouseButton.SECONDARY){
-				GameState.getGameState().dropHolding();
-			}else if(!GameState.getGameState().isHolding()){
+			GameState.getGameState().dropHolding();
+			if(mouseEvent.getButton() == MouseButton.PRIMARY){
 				for(GameObject go : GameState.getGameState().getList()){
 					if(go instanceof Component){
 						Component comp = (Component)go;
@@ -94,10 +93,7 @@ public class EvolutionGame extends Application {
 	EventHandler<MouseEvent> moveHandler = new EventHandler<MouseEvent>(){
 		@Override
 		public void handle(MouseEvent event) {
-			if(GameState.getGameState().getGameState().isHolding()){
-				GameState.getGameState().getGameState().getHeldComponent().x = event.getX();
-				GameState.getGameState().getGameState().getHeldComponent().y = event.getY();
-			}			
+			GameState.getGameState().moveHeldComponent(event.getX(),event.getY()); 
 		}
 	};
 	ChangeListener<Number> sliderHandler = new ChangeListener<Number>(){
