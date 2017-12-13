@@ -33,7 +33,7 @@ public class EvolutionGame extends Application {
 		public void handle(long now) {
 			gc.setFill(Color.WHITE);
 			gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
-			for(GameObject obj : GameState.getList())
+			for(GameObject obj : GameState.getGameState().getList())
 			{
 				obj.update();
 			}
@@ -50,10 +50,10 @@ public class EvolutionGame extends Application {
 	EventHandler<MouseEvent> clickHandler = new EventHandler<MouseEvent>(){
 		@Override
 		public void handle(MouseEvent mouseEvent){
-			if(GameState.isHolding() || mouseEvent.getButton() == MouseButton.SECONDARY){
-				GameState.dropHolding();
-			}else if(!GameState.isHolding()){
-				for(GameObject go : GameState.getList()){
+			if(GameState.getGameState().isHolding() || mouseEvent.getButton() == MouseButton.SECONDARY){
+				GameState.getGameState().dropHolding();
+			}else if(!GameState.getGameState().isHolding()){
+				for(GameObject go : GameState.getGameState().getList()){
 					if(go instanceof Component){
 						Component comp = (Component)go;
 						comp.contextMenu.hide();
@@ -83,7 +83,7 @@ public class EvolutionGame extends Application {
 
 		@Override
 		public void handle(ContextMenuEvent event) {
-			for(GameObject go : GameState.getList()){
+			for(GameObject go : GameState.getGameState().getGameState().getList()){
 				if(go instanceof Component){
 					((Component) go).rightClick(event);
 				}
@@ -94,9 +94,9 @@ public class EvolutionGame extends Application {
 	EventHandler<MouseEvent> moveHandler = new EventHandler<MouseEvent>(){
 		@Override
 		public void handle(MouseEvent event) {
-			if(GameState.isHolding()){
-				GameState.getHeldComponent().x = event.getX();
-				GameState.getHeldComponent().y = event.getY();
+			if(GameState.getGameState().getGameState().isHolding()){
+				GameState.getGameState().getGameState().getHeldComponent().x = event.getX();
+				GameState.getGameState().getGameState().getHeldComponent().y = event.getY();
 			}			
 		}
 	};
@@ -104,7 +104,7 @@ public class EvolutionGame extends Application {
 
 		@Override
 		public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-			GameState.setVolume(new_val.floatValue());
+			SoundThread.getSoundThread().setVolume(new_val.floatValue());
 		}
 		
 	};
@@ -119,7 +119,6 @@ public class EvolutionGame extends Application {
 		scene=new Scene(root,800,600);
 		stage.setScene(scene);
 		stage.show();
-
 		root.getChildren().addAll(new AddButton("battery",10, 50),new AddButton("switch",10, 80)
 				,new AddButton("buzzer",10, 110), new AddButton("motor",10,140));
 		canvas = new Canvas(600,600);
@@ -129,14 +128,14 @@ public class EvolutionGame extends Application {
 		canvas.setLayoutX(200);
 		root.getChildren().add(canvas);
 		
-		GameState.setGraphicsContext(gc);
+		Factory.getFactory().setGraphicsContext(gc);
 		
 		//Starting components
-		GameState.getFactory().createProduct("bulb", 100, 100);
-		GameState.getFactory().createProduct("bulb", 300, 100);
-		GameState.getFactory().createProduct("bulb", 200, 200);
-		GameState.getFactory().createProduct("battery", 200, 10);
-		GameState.dropHolding();
+		Factory.getFactory().createProduct("bulb", 100, 100);
+		Factory.getFactory().createProduct("bulb", 300, 100);
+		Factory.getFactory().createProduct("bulb", 200, 200);
+		Factory.getFactory().createProduct("battery", 200, 10);
+		GameState.getGameState().getGameState().dropHolding();
 		
 		canvas.setOnMouseClicked(clickHandler);
 		canvas.setOnContextMenuRequested(contextHandler);
@@ -151,7 +150,7 @@ public class EvolutionGame extends Application {
 		slider.setLayoutX(10);
 		slider.setLayoutY(30);
 		slider.valueProperty().addListener(sliderHandler);
-		GameState.setVolume(20);
+		SoundThread.getSoundThread().setVolume(20);
 		
 		//slider.set
 		root.getChildren().addAll(slider,label);

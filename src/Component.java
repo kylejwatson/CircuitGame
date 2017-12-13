@@ -12,7 +12,7 @@ public abstract class Component extends GameObject {
 	protected Component prevComponent;
 	protected float power;
 	protected ContextMenu contextMenu = new ContextMenu();
-	protected PowerCons powerCons;
+	protected PowerConsumption powerConsumption;
 	public Component(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
 		Component thisComp = this;
@@ -21,7 +21,7 @@ public abstract class Component extends GameObject {
 
 			@Override
 			public void handle(ActionEvent event) {
-				GameState.setHeldComponent(thisComp);
+				GameState.getGameState().setHeldComponent(thisComp);
 			}
 		});
 		MenuItem deleteLeftButton = new MenuItem("< Remove Left Wire");
@@ -56,7 +56,7 @@ public abstract class Component extends GameObject {
 
 			@Override
 			public void handle(ActionEvent event) {
-				GameState.getList().remove(thisComp);
+				GameState.getGameState().getList().remove(thisComp);
 			}
 		});
 
@@ -81,13 +81,11 @@ public abstract class Component extends GameObject {
 
 	public boolean getEdge(double x, double y, int select){
 		boolean yVal = y > this.y && y < this.y + 30;
-		if(select == 1){
-			if(x > this.x -10 && x < this.x+15 && yVal ){
-				return true;
-			}
-		}else if(x > this.x +15 && x < this.x +40 && yVal){
+		if(select == 1 && prevComponent == null && x > this.x -10 && x < this.x+15 && yVal)
 			return true;
-		}
+		else if(select == 2 && nextComponent == null && x > this.x +15 && x < this.x +40 && yVal)
+			return true;
+		
 		return false;
 	}
 
@@ -149,11 +147,11 @@ public abstract class Component extends GameObject {
 	}
 	
 	private float consumePower(float curPower){
-		return powerCons.consumePower(curPower);
+		return powerConsumption.consumePower(curPower);
 	}
 	
-	protected void setPowerCons(PowerCons powerCons){
-		this.powerCons = powerCons;
+	protected void setPowerCons(PowerConsumption powerConsumption){
+		this.powerConsumption = powerConsumption;
 	}
 	
 	public boolean click(double x, double y){

@@ -11,7 +11,7 @@ public class AddButton extends Button {
 		EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				GameState.getFactory().createProduct(fText, 0, 0);
+				Factory.getFactory().createProduct(fText, 0, 0);
 			}
 		};
 		setOnAction(buttonHandler);

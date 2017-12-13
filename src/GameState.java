@@ -7,41 +7,55 @@ import javax.sound.sampled.SourceDataLine;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class GameState{
-	private static Component heldComponent;
-	private static boolean holding = false;
-	private static ArrayList<GameObject> list = new ArrayList<GameObject>();
-	private static float volume;
-    private static SourceDataLine sdl;
-	private static Factory factory;
-	private static Runnable soundThread;
+public class GameState{
+	private Component heldComponent;
+	private boolean holding = false;
+	private ArrayList<GameObject> list;
+	//private float volume;
+    //private SourceDataLine sdl;
+	private Factory factory;
+	//private SoundThread soundThread;
+	private static GameState instance;
+	private GameState(){
+		 list = new ArrayList<GameObject>();
+	}
 
-	public static ArrayList<GameObject> getList(){
+//	public void setGraphicsContext(GraphicsContext gc) {
+//		factory = new Factory(gc);
+//	}
+//	
+	public static GameState getGameState(){
+		if(instance == null){
+			instance = new GameState();
+		}
+		return instance;
+	}
+	public ArrayList<GameObject> getList(){
 		return list;
 	}
 	
-	public static Factory getFactory(){
-		return factory;
-	}
+//	public Factory getFactory(){
+//		return factory;
+//	}
 	
-	public static Component getHeldComponent(){
+	public Component getHeldComponent(){
 		return heldComponent;
 	}
 	
-	public static void setHeldComponent(Component co){
+	public void setHeldComponent(Component co){
 		heldComponent = co;
 		holding = true;
 	}
 	
-	public static  boolean isHolding(){
+	public boolean isHolding(){
 		return holding;
 	}
 	
-	public static void dropHolding(){
+	public void dropHolding(){
 		holding = false;
 	}
 	
-	static void setVolume(float volume){
+	/*static void setVolume(float volume){
 		byte[] buf = new byte[ 1 ];
 		AudioFormat af= new AudioFormat( (float )44100, 8, 1, true, false );
 		if(sdl == null){
@@ -76,15 +90,12 @@ public abstract class GameState{
 			}
 			
 		};
-	}
+	}*/
 
-	public static void setGraphicsContext(GraphicsContext gc) {
-		factory = new Factory(gc);
-		
-	}
 
-	public static Runnable getSoundThread() {
-		// TODO Auto-generated method stub
+	/*public Runnable getSoundThread() {
+		if(soundThread == null)
+			soundThread = new SoundThread
 		return soundThread;
-	}
+	}*/
 }

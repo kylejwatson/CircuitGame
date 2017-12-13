@@ -1,19 +1,19 @@
 //Strategy Design Pattern
-public interface PowerCons {
+public interface PowerConsumption {
 	float consumePower(float curPower);
 }
 
-class ConsumesPower implements PowerCons{
+class ConsumesPower implements PowerConsumption{
 	public float consumePower(float curPower) {
 		return curPower - 3;
 	}
 }
-class AddsPower implements PowerCons{
+class AddsPower implements PowerConsumption{
 	public float consumePower(float curPower) {
 		return curPower + 10;
 	}
 }
-class NoPower implements PowerCons{
+class NoPower implements PowerConsumption{
 	public float consumePower(float curPower) {
 		return curPower;
 	}

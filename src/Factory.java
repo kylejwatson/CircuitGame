@@ -8,12 +8,19 @@ interface FactoryIF {
 class Factory implements FactoryIF {
 
 	private GraphicsContext gc;
-	
-	public Factory(GraphicsContext gc) {
+	private static Factory instance;
+	private Factory() {
 		super();
-		this.gc = gc;
 	}
 
+	public static Factory getFactory(){
+		if(instance == null)
+			instance = new Factory();
+		return instance;
+	}
+	public void setGraphicsContext(GraphicsContext gc){
+		this.gc = gc;
+	}
 	@Override
 	public GameObject createProduct(String discrim, double x, double y) {
 		Component co = null;
@@ -35,8 +42,8 @@ class Factory implements FactoryIF {
 			break;
 		}
 		if(co != null){
-			GameState.setHeldComponent(co);
-			GameState.getList().add(co);
+			GameState.getGameState().setHeldComponent(co);
+			GameState.getGameState().getList().add(co);
 			return co;
 		}
 		return new GameObject(gc,0,0);
