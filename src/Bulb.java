@@ -8,7 +8,7 @@ public class Bulb extends Component {
 		super(gc, x, y);
 		img = new Image("res/bulb.png");
 		// TODO Auto-generated constructor stub
-		setPowerCons(new ConsumesPower());
+		setPowerConsumption(new ConsumesPower());
 	}
 	
 	public void shine(){

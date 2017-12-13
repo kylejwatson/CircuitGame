@@ -11,7 +11,7 @@ public class Buzzer extends Component {
 		super(gc, x, y);
 		// TODO Auto-generated constructor stub
 		img = new Image("res/buzzer.png");
-		setPowerCons(new ConsumesPower());
+		setPowerConsumption(new ConsumesPower());
 	}
 	
 	public void buzz(){

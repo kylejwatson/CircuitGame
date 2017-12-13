@@ -6,7 +6,7 @@ public class Motor extends Component {
 	public Motor(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
 		img = new Image("res/motor.png");
-		setPowerCons(new ConsumesPower());
+		setPowerConsumption(new ConsumesPower());
 	}
 	
 	public void spin(){

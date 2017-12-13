@@ -89,7 +89,7 @@ public abstract class Component extends GameObject {
 		return false;
 	}
 
-	public void setPower(float power){
+	private void setPower(float power){
 		System.out.println(getClass() + " a " +power);
 		if(power != this.power){
 			System.out.println(getClass() + " b " +power);
@@ -99,7 +99,7 @@ public abstract class Component extends GameObject {
 		}
 	}
 	
-	public void resetPower(){
+	protected void resetPower(){
 		if(nextComponent == null || prevComponent == null){
 			setPower(0);
 		}else{
@@ -150,7 +150,7 @@ public abstract class Component extends GameObject {
 		return powerConsumption.consumePower(curPower);
 	}
 	
-	protected void setPowerCons(PowerConsumption powerConsumption){
+	protected void setPowerConsumption(PowerConsumption powerConsumption){
 		this.powerConsumption = powerConsumption;
 	}
 	

@@ -11,7 +11,7 @@ public class Switch extends Component {
 		super(gc, x, y);
 		switchedOn = true;
 		img = new Image("res/switchon.png");
-		setPowerCons(new NoPower());
+		setPowerConsumption(new NoPower());
 		MenuItem switchButton = new MenuItem("Flip Switch");
 		switchButton.setOnAction(new EventHandler<ActionEvent>() {
 
