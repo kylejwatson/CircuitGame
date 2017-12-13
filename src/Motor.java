@@ -9,7 +9,7 @@ public class Motor extends Component {
 		setPowerConsumption(new ConsumesPower());
 	}
 	
-	public void spin(){
+	private void spin(){
 		angle += power/100;
 		double xpoint = Math.cos(angle)*10;
 		double ypoint = Math.sin(angle)*10;

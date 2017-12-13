@@ -14,7 +14,7 @@ public class Buzzer extends Component {
 		setPowerConsumption(new ConsumesPower());
 	}
 	
-	public void buzz(){
+	private void buzz(){
 		if(power != 0)
 			SoundThread.getSoundThread().playSound();
 		gc.drawImage(soundImg, x, y-power,30,power);		

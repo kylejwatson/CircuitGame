@@ -11,7 +11,7 @@ public class Bulb extends Component {
 		setPowerConsumption(new ConsumesPower());
 	}
 	
-	public void shine(){
+	private void shine(){
 		gc.setFill(new Color(1,1,0,power/20));
 		gc.fillOval(x+5, y+5, 20, 20);		
 	}

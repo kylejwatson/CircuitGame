@@ -8,11 +8,11 @@ import javafx.scene.paint.Color;
 
 public abstract class Component extends GameObject {
 
-	protected Component nextComponent;
-	protected Component prevComponent;
+	private Component nextComponent;
+	private Component prevComponent;
 	protected float power;
 	protected ContextMenu contextMenu = new ContextMenu();
-	protected PowerConsumption powerConsumption;
+	private PowerConsumption powerConsumption;
 	public Component(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
 		Component thisComp = this;

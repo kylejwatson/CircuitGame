@@ -7,10 +7,14 @@ import javafx.scene.image.Image;
 public class Switch extends Component {
 
 	private boolean switchedOn;
+	private Image onImage;
+	private Image offImage;
 	public Switch(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
 		switchedOn = true;
-		img = new Image("res/switchon.png");
+		onImage = new Image("res/switchon.png");
+		offImage = new Image("res/switchoff.png");
+		img = onImage;
 		setPowerConsumption(new NoPower());
 		MenuItem switchButton = new MenuItem("Flip Switch");
 		switchButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -23,12 +27,12 @@ public class Switch extends Component {
 		contextMenu.getItems().add(switchButton);
 	}
 	
-	public void toggle(){
+	private void toggle(){
 		switchedOn = !switchedOn;
 		if(switchedOn){
-			img = new Image("res/switchon.png");
+			img = onImage;
 		}else{
-			img = new Image("res/switchoff.png");
+			img = offImage;
 		}
 		resetPower();
 	}
