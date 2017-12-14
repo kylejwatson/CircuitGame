@@ -79,14 +79,14 @@ public abstract class Component extends GameObject {
 		}
 	}
 
-	public boolean getEdge(double x, double y, int select){
+	public int getEdge(double x, double y, int select){
 		boolean yVal = y > this.y && y < this.y + 30;
-		if(select == 1 && prevComponent == null && x > this.x -10 && x < this.x+15 && yVal)
-			return true;
-		else if(select == 2 && nextComponent == null && x > this.x +15 && x < this.x +40 && yVal)
-			return true;
+		if(prevComponent == null && x > this.x -10 && x < this.x+15 && yVal)
+			return 2;
+		else if(nextComponent == null && x > this.x +15 && x < this.x +40 && yVal)
+			return 1;
 		
-		return false;
+		return 0;
 	}
 
 	private void setPower(float power){
@@ -142,7 +142,7 @@ public abstract class Component extends GameObject {
 	}
 
 	public void rightClick(ContextMenuEvent event){
-		if(click(event.getX(), event.getY()))
+		if(isClicked(event.getX(), event.getY()))
 			contextMenu.show(gc.getCanvas(),event.getScreenX(),event.getSceneY());;
 	}
 	
@@ -154,7 +154,7 @@ public abstract class Component extends GameObject {
 		this.powerConsumption = powerConsumption;
 	}
 	
-	public boolean click(double x, double y){
+	public boolean isClicked(double x, double y){
 		if(x > this.x && x < this.x+30 && y > this.y && y < this.y + 30)
 			return true;
 		return false;

@@ -49,21 +49,17 @@ public class CircuitGame extends Application {
 					if(go instanceof Component){
 						Component comp = (Component)go;
 						comp.contextMenu.hide();
-						if(selected != null){
-							boolean edge = comp.getEdge(mouseEvent.getX(), mouseEvent.getY(), select);
-							if(edge){
-								selected.setNode(comp,select);
-								selected = null;
-							}
-						}else{
-							boolean edgeLeft = comp.getEdge(mouseEvent.getX(), mouseEvent.getY(), 1);
-							boolean edgeRight = comp.getEdge(mouseEvent.getX(), mouseEvent.getY(), 2);
-							if(edgeLeft){
+						int edge = comp.getEdge(mouseEvent.getX(), mouseEvent.getY(), select);
+						if(edge != 0){
+							if(selected != null){
+								boolean matches = edge != select;
+								if(matches){
+									selected.setNode(comp,select);
+									selected = null;
+								}
+							}else{
 								selected = comp;
-								select = 2;
-							}else if(edgeRight){
-								selected = comp;
-								select = 1;
+								select = edge;
 							}
 						}
 					}
