@@ -38,7 +38,7 @@ public class CircuitGame extends Application {
 					gc.fillOval(selected.x+25, selected.y+12, 6, 6);
 				}
 			}
-		} 
+		}
 	};
 	private EventHandler<MouseEvent> clickHandler = new EventHandler<MouseEvent>(){
 		@Override
@@ -104,7 +104,7 @@ public class CircuitGame extends Application {
 		Scene scene=new Scene(root,800,600);
 		stage.setScene(scene);
 		stage.show();
-		root.getChildren().addAll(new AddButton("battery",10, 50),new AddButton("switch",10, 80)
+		root.getChildren().addAll(new AddButton("cell",10, 50),new AddButton("switch",10, 80)
 				,new AddButton("buzzer",10, 110), new AddButton("motor",10,140));
 		Canvas canvas = new Canvas(600,600);
 		gc = canvas.getGraphicsContext2D();

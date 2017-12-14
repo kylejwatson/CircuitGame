@@ -36,16 +36,17 @@ public class SoundThread implements Runnable {
 	}
 	@Override
 	public void run() {
+		/*
+		 * Solution for generating beep from tangens 2009
+		 * https://stackoverflow.com/questions/1932490/java-generating-sound/1932537#1932537
+		 */
 		byte[] buf = new byte[ 1 ];
-	
 		 try {
 				sdl.open();
 			} catch (LineUnavailableException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		    sdl.start();
-			// TODO Auto-generated method stub
 			for( int i = 0; i < 100 * (float )44100 / 1000; i++ ) {
 		        double angle = i / ( (float )44100 / 440 ) * 2.0 * Math.PI;
 		        buf[ 0 ] = (byte )( Math.sin( angle ) * volume);
@@ -54,5 +55,4 @@ public class SoundThread implements Runnable {
 			sdl.drain();
 			sdl.close();
 	}
-
 }

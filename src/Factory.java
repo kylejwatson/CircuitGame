@@ -25,8 +25,8 @@ class Factory implements FactoryIF {
 	public GameObject createProduct(String discrim, double x, double y) {
 		Component co = null;
 		switch(discrim){//add to gamestate holding 
-		case "battery":
-			co = new Battery(gc,x,y);
+		case "cell":
+			co = new Cell(gc,x,y);
 			break;
 		case "bulb":
 			co = new Bulb(gc,x,y);
