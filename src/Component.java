@@ -6,6 +6,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.paint.Color;
 
+/**
+ * Super class for all elements mimicking parts of a circuit
+ * @author Kyle Watson
+ *
+ */
 public abstract class Component extends GameObject {
 
 	private Component nextComponent;
@@ -13,6 +18,12 @@ public abstract class Component extends GameObject {
 	protected float power;
 	protected ContextMenu contextMenu = new ContextMenu();
 	private PowerConsumption powerConsumption;
+
+	/**
+	 * @param gc the {@link GraphicsContext} that the component will be drawn to
+	 * @param x position of the image
+	 * @param y position of the image
+	 */
 	public Component(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
 		Component thisComp = this;
@@ -75,6 +86,12 @@ public abstract class Component extends GameObject {
 		contextMenu.getItems().addAll(moveButton, deleteLeftButton,deleteRightButton,deleteButton);
 	}
 
+	
+	/**
+	 * Links this with {@code comp} so they can be considered in the same circuit
+	 * @param comp to link with 
+	 * @param select 1 will link this right to {@code comp}s left and 2 will do vice-versa
+	 */
 	public void setNode(Component comp, int select ){
 		if(comp != this){
 			if(select == 2 && prevComponent == null && comp.nextComponent == null){
@@ -89,6 +106,12 @@ public abstract class Component extends GameObject {
 		}
 	}
 
+	/**
+	 * Gets the side which the point lands on with some leeway by a few pixels
+	 * @param x value to check
+	 * @param y value to check
+	 * @return the side the point hit, 1 is left and 2 is right
+	 */
 	public int getEdge(double x, double y){
 		boolean yVal = y > this.y && y < this.y + 30;
 		if(prevComponent == null && x > this.x -10 && x < this.x+15 && yVal)
@@ -99,6 +122,11 @@ public abstract class Component extends GameObject {
 		return 0;
 	}
 
+	
+	/**
+	 * Sets the power for this and any other {@link Component}s in the same circuit
+	 * @param power value to set for the circuit
+	 */
 	private void setPower(float power){
 		System.out.println(getClass() + " a " +power);
 		if(power != this.power){
@@ -109,6 +137,9 @@ public abstract class Component extends GameObject {
 		}
 	}
 	
+	/**
+	 * Calculates and then sets the power for the entire circuit
+	 */
 	protected void resetPower(){
 		if(nextComponent == null || prevComponent == null){
 			setPower(0);
@@ -117,6 +148,12 @@ public abstract class Component extends GameObject {
 		}
 	}
 
+	/**
+	 * Recursive method to get the power of the circuit
+	 * @param curPower the cumulative power (should be set to 0 to start)
+	 * @param startNode the {@link Component} to start and end on in the loop
+	 * @return the final calculated power
+	 */
 	protected float calculatePower(float curPower, Component startNode){
 		if(this == startNode){
 			System.out.println(curPower + " " + this.getClass());
@@ -153,19 +190,38 @@ public abstract class Component extends GameObject {
 		}
 	}
 
+	/**
+	 * Handles right click events by showing a {@link ContextMenu}
+	 * @param event that was fired
+	 */
 	public void rightClick(ContextMenuEvent event){
 		if(isClicked(event.getX(), event.getY()))
 			contextMenu.show(gc.getCanvas(),event.getScreenX(),event.getSceneY());;
 	}
 	
+	/**
+	 * Manipulates the current power in the calculations
+	 * @param curPower cumulative power in the circuit
+	 * @return cumulative power after manipulation
+	 */
 	private float consumePower(float curPower){
 		return powerConsumption.consumePower(curPower);
 	}
 	
+	/**
+	 * Sets how power is manipulated when calculated
+	 * @param powerConsumption
+	 */
 	protected void setPowerConsumption(PowerConsumption powerConsumption){
 		this.powerConsumption = powerConsumption;
 	}
 	
+	/**
+	 * Checks if the point lands on the component
+	 * @param x position of the point
+	 * @param y position of the point
+	 * @return if the point hit
+	 */
 	public boolean isClicked(double x, double y){
 		if(x > this.x && x < this.x+30 && y > this.y && y < this.y + 30)
 			return true;

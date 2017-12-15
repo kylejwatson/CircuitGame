@@ -95,6 +95,10 @@ public class CircuitGame extends Application {
 		
 	};
 	
+	/**
+	 * Entry point for the application
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}	
@@ -116,8 +120,6 @@ public class CircuitGame extends Application {
 		root.getChildren().add(canvas);
 		
 		Factory.getFactory().setGraphicsContext(gc);
-		
-		//Starting components
 		Factory.getFactory().createProduct("prof", 400, 400);
 		
 		canvas.setOnMouseClicked(clickHandler);
@@ -135,9 +137,7 @@ public class CircuitGame extends Application {
 		slider.setLayoutY(30);
 		slider.valueProperty().addListener(sliderHandler);
 		
-		//slider.set
 		root.getChildren().addAll(slider,label);
 		timer.start();
-
 	}
 }

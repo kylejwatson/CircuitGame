@@ -1,7 +1,17 @@
-//Factory Design Pattern
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * Factory to create {@link GameObject}s and add them to {@link GameState}s display list
+ * @author Kyle Watson
+ *
+ */
 interface FactoryIF { 
+	/**
+	 * @param discrim discriminator to indicate which {@link GameObject} to create
+	 * @param x position of the {@link GameObject}
+	 * @param y position of the {@link GameObject}
+	 * @return the {@link GameObject} created
+	 */
 	GameObject createProduct(String discrim, double x, double y);
 }
 
@@ -9,6 +19,9 @@ class Factory implements FactoryIF {
 
 	private GraphicsContext gc;
 	private static Factory instance;
+	/**
+	 * Surpressed initialiser to enable singleton design
+	 */
 	private Factory() {
 		super();
 	}
