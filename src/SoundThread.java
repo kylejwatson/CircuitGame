@@ -11,6 +11,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import sun.applet.Main;
 
+/**
+ * Used to play generated beeps and success sounds without crackling or replaying before whole sounds have been played
+ * @author Kyle Watson
+ *
+ */
 public class SoundThread implements Runnable {
 	private SourceDataLine sdl;
 	private AudioFormat af;
@@ -19,6 +24,9 @@ public class SoundThread implements Runnable {
 	private static SoundThread instance;
 	private Clip clip;
 	FloatControl clipVolume;
+	/**
+	 * Surpressed constructor to enable singleton design
+	 */
 	private SoundThread() {
 		af = new AudioFormat( (float )44100, 8, 1, true, false );
 		 try {
@@ -35,17 +43,26 @@ public class SoundThread implements Runnable {
 		 t = new Thread(instance);
 		 setVolume(0);
 	}
+	/**
+	 * @return single {@link SoundThread} instance
+	 */
 	public static SoundThread getSoundThread(){
 		if(instance == null)
 			instance = new SoundThread();
 		return instance;
 	}
+	/**
+	 * plays a beep tone in a seperate audio thread if the thread isn't already running
+	 */
 	public void playSound(){
 		if(!t.isAlive()){
 			t = new Thread(instance);
 			t.start();
 		}
 	}
+	/**
+	 * @param volume level to be set (0-100)
+	 */
 	public void setVolume(float volume){
 		this.volume = volume;
 		/*
@@ -56,6 +73,9 @@ public class SoundThread implements Runnable {
 		float range = (cVolume.getMaximum() - cVolume.getMinimum())/2;
 		cVolume.setValue(volume*range/100 + cVolume.getMinimum() + range);
 	}
+	/**
+	 * Plays the success tone if it's not already playing
+	 */
 	public void playSuccess() {
 		/*
 		 * Solution for playing audio clip from pek 2008

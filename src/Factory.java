@@ -20,17 +20,23 @@ class Factory implements FactoryIF {
 	private GraphicsContext gc;
 	private static Factory instance;
 	/**
-	 * Surpressed initialiser to enable singleton design
+	 * Surpressed constructor to enable singleton design
 	 */
 	private Factory() {
 		super();
 	}
 
+	/**
+	 * @return single instance of {@link Factory}
+	 */
 	public static Factory getFactory(){
 		if(instance == null)
 			instance = new Factory();
 		return instance;
 	}
+	/**
+	 * @param gc {@link GraphicsContext} to set to for creating {@link GameObjects}
+	 */
 	public void setGraphicsContext(GraphicsContext gc){
 		this.gc = gc;
 	}

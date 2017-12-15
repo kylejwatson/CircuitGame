@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 public class Bulb extends Component {
 
 	/**
-	 * @param gc the {@link GraphicsContext} that the component will be drawn to
+	 * @param gc the {@link GraphicsContext} that the {@link Component} will be drawn to
 	 * @param x position of the image
 	 * @param y position of the image
 	 */

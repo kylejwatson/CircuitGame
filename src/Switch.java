@@ -4,11 +4,21 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 
+/**
+ * A {@link Component} mimicking a switch that breaks the circuit when toggled off
+ * @author Kyle Watson
+ *
+ */
 public class Switch extends Component {
 
 	private boolean switchedOn;
 	private Image onImage;
 	private Image offImage;
+	/**
+	 * @param gc the {@link GraphicsContext} that the {@link Component} will be drawn to
+	 * @param x position of the image
+	 * @param y position of the image
+	 */
 	public Switch(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
 		switchedOn = true;
@@ -27,6 +37,9 @@ public class Switch extends Component {
 		contextMenu.getItems().add(switchButton);
 	}
 	
+	/**
+	 * Changes the state of the switch on/off
+	 */
 	private void toggle(){
 		switchedOn = !switchedOn;
 		if(switchedOn){

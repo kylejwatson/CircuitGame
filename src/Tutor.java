@@ -3,9 +3,20 @@ import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * Handles all lessons 
+ * @author Kyle Watson
+ *
+ */
 public class Tutor extends GameObject {
 	ArrayList<LessonIF> lessons = new ArrayList<LessonIF>();
 	int curLesson = 0;
+
+	/**
+	 * @param gc the {@link GraphicsContext} that the {@link Tutor} will be drawn to
+	 * @param x position of the image
+	 * @param y position of the image
+	 */
 	public Tutor(GraphicsContext gc, double x, double y) {
 		super(gc, x, y);
 		img = new Image("res/prof.png");

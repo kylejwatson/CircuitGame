@@ -1,5 +1,13 @@
-//Strategy Design Pattern
+/**
+ * Manipulates power supplied
+ * @author Kyle Watson
+ *
+ */
 public interface PowerConsumption {
+	/**
+	 * @param curPower cumulative power before manipulation
+	 * @return power after manipulation
+	 */
 	float consumePower(float curPower);
 }
 

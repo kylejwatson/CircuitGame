@@ -11,7 +11,7 @@ public class Buzzer extends Component {
 	private Image soundImg = new Image("res/sound.png");
 
 	/**
-	 * @param gc the {@link GraphicsContext} that the component will be drawn to
+	 * @param gc the {@link GraphicsContext} that the {@link Component} will be drawn to
 	 * @param x position of the image
 	 * @param y position of the image
 	 */
