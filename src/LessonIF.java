@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
  * @author Kyle Watson
  *
  */
-interface LessonIF{
+public interface LessonIF{
 	/**
 	 * @return if the instructions have been met
 	 */
@@ -24,7 +24,7 @@ interface LessonIF{
 	 */
 	public void update(double x,double y,GraphicsContext gc);
 }
-public abstract class Lesson implements LessonIF{
+abstract class Lesson implements LessonIF{
 	private Image image;
 	private ArrayList<String> paragraph = new ArrayList<String>();
 	/**

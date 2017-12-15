@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * Handles all lessons 
+ * Handles all {@link LessonIF}s 
  * @author Kyle Watson
  *
  */
