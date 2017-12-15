@@ -15,7 +15,13 @@ public abstract class Component extends GameObject {
 
 	private Component nextComponent;
 	private Component prevComponent;
+	/**
+	 * Power level obtained from the connected circuit
+	 */
 	protected float power;
+	/**
+	 * Menu to be displayed when right clicked, used to change the {@link Component}
+	 */
 	protected ContextMenu contextMenu = new ContextMenu();
 	private PowerConsumption powerConsumption;
 

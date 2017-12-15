@@ -9,8 +9,8 @@ import javafx.scene.image.Image;
  *
  */
 public class Tutor extends GameObject {
-	ArrayList<LessonIF> lessons = new ArrayList<LessonIF>();
-	int curLesson = 0;
+	private ArrayList<LessonIF> lessons = new ArrayList<LessonIF>();
+	private int curLesson = 0;
 
 	/**
 	 * @param gc the {@link GraphicsContext} that the {@link Tutor} will be drawn to

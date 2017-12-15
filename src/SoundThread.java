@@ -23,7 +23,6 @@ public class SoundThread implements Runnable {
 	private Thread t;
 	private static SoundThread instance;
 	private Clip clip;
-	FloatControl clipVolume;
 	/**
 	 * Surpressed constructor to enable singleton design
 	 */

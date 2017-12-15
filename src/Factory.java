@@ -35,7 +35,7 @@ class Factory implements FactoryIF {
 		return instance;
 	}
 	/**
-	 * @param gc {@link GraphicsContext} to set to for creating {@link GameObjects}
+	 * @param gc {@link GraphicsContext} to set to for creating {@link GameObject}s
 	 */
 	public void setGraphicsContext(GraphicsContext gc){
 		this.gc = gc;

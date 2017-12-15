@@ -54,7 +54,7 @@ public abstract class Lesson implements LessonIF{
 	}
 }
 /**
- * {@link Lesson} used in place of null so its not need to be checked and stop {@link NullPointException}s
+ * {@link Lesson} used in place of null so its not need to be checked and stop {@link NullPointerException}s
  * @author Kyle Watson
  *
  */
