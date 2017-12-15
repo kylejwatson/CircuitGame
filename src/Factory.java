@@ -23,28 +23,30 @@ class Factory implements FactoryIF {
 	}
 	@Override
 	public GameObject createProduct(String discrim, double x, double y) {
-		Component co = null;
+		GameObject go = null;
 		switch(discrim){//add to gamestate holding 
 		case "cell":
-			co = new Cell(gc,x,y);
+			go = new Cell(gc,x,y);
 			break;
 		case "bulb":
-			co = new Bulb(gc,x,y);
+			go = new Bulb(gc,x,y);
 			break;
 		case "switch":
-			co = new Switch(gc,x,y);
+			go = new Switch(gc,x,y);
 			break;
 		case "buzzer":
-			co = new Buzzer(gc,x,y);
+			go = new Buzzer(gc,x,y);
 			break;
 		case "motor":
-			co = new Motor(gc,x,y);
+			go = new Motor(gc,x,y);
+			break;
+		case "prof":
+			go = new Tutor(gc,x,y);
 			break;
 		}
-		if(co != null){
-			GameState.getGameState().setHeldComponent(co);
-			GameState.getGameState().getList().add(co);
-			return co;
+		if(go != null){
+			GameState.getGameState().addGameObject(go);
+			return go;
 		}
 		return new GameObject(gc,0,0);
 	}

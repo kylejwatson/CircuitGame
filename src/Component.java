@@ -56,7 +56,17 @@ public abstract class Component extends GameObject {
 
 			@Override
 			public void handle(ActionEvent event) {
-				GameState.getGameState().getList().remove(thisComp);
+				if(prevComponent != null){
+					prevComponent.nextComponent = null;
+					prevComponent.resetPower();
+					prevComponent = null;
+				}
+				if(nextComponent != null){
+					nextComponent.prevComponent = null;
+					nextComponent.resetPower();
+					nextComponent = null;
+				}
+				GameState.getGameState().removeGameObject(thisComp);
 			}
 		});
 
@@ -79,7 +89,7 @@ public abstract class Component extends GameObject {
 		}
 	}
 
-	public int getEdge(double x, double y, int select){
+	public int getEdge(double x, double y){
 		boolean yVal = y > this.y && y < this.y + 30;
 		if(prevComponent == null && x > this.x -10 && x < this.x+15 && yVal)
 			return 2;
@@ -119,8 +129,10 @@ public abstract class Component extends GameObject {
 				startNode = this;
 			curPower = consumePower(curPower);
 		}
-		System.out.println(getClass() + " " +curPower);
-		return nextComponent.calculatePower(curPower, startNode);
+		if(nextComponent != null)
+			return nextComponent.calculatePower(curPower, startNode);
+		else
+			return 0f;
 	}
 
 	public void update(){

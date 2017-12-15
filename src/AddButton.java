@@ -10,7 +10,9 @@ public class AddButton extends Button {
 		EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Factory.getFactory().createProduct(fText, 0, 0);
+				Component co = (Component)Factory.getFactory().createProduct(fText, 0, 0);
+				GameState.getGameState().setHeldComponent(co);
+				
 			}
 		};
 		setOnAction(buttonHandler);

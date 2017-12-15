@@ -38,6 +38,7 @@ public class CircuitGame extends Application {
 					gc.fillOval(selected.x+25, selected.y+12, 6, 6);
 				}
 			}
+			GameState.getGameState().flush();
 		}
 	};
 	private EventHandler<MouseEvent> clickHandler = new EventHandler<MouseEvent>(){
@@ -49,7 +50,7 @@ public class CircuitGame extends Application {
 					if(go instanceof Component){
 						Component comp = (Component)go;
 						comp.contextMenu.hide();
-						int edge = comp.getEdge(mouseEvent.getX(), mouseEvent.getY(), select);
+						int edge = comp.getEdge(mouseEvent.getX(), mouseEvent.getY());
 						if(edge != 0){
 							if(selected != null){
 								boolean matches = edge != select;
@@ -105,7 +106,7 @@ public class CircuitGame extends Application {
 		stage.setScene(scene);
 		stage.show();
 		root.getChildren().addAll(new AddButton("cell",10, 50),new AddButton("switch",10, 80)
-				,new AddButton("buzzer",10, 110), new AddButton("motor",10,140));
+				,new AddButton("buzzer",10, 110), new AddButton("motor",10,140),new AddButton("bulb",10, 170));
 		Canvas canvas = new Canvas(600,600);
 		gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.WHITE);
@@ -116,11 +117,7 @@ public class CircuitGame extends Application {
 		Factory.getFactory().setGraphicsContext(gc);
 		
 		//Starting components
-		Factory.getFactory().createProduct("bulb", 100, 100);
-		Factory.getFactory().createProduct("bulb", 300, 100);
-		Factory.getFactory().createProduct("bulb", 200, 200);
-		Factory.getFactory().createProduct("battery", 200, 10);
-		GameState.getGameState().dropHolding();
+		Factory.getFactory().createProduct("prof", 400, 400);
 		
 		canvas.setOnMouseClicked(clickHandler);
 		canvas.setOnContextMenuRequested(contextHandler);
