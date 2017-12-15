@@ -146,7 +146,7 @@ public class Tutor extends GameObject {
 							b2 = true;
 					}else if(go instanceof Buzzer){
 						Buzzer b = (Buzzer)go;
-						if(b.power > 0)
+						if(b.power == 0)
 							b1 = true;
 					}
 				}
