@@ -24,7 +24,10 @@ public class Bulb extends Component {
 	 * Overlays the yellow circle to mimic light emissions
 	 */
 	private void shine(){
-		gc.setFill(new Color(1,1,0,power/20));
+		if(power/20 > 1)
+			gc.setFill(new Color(1,1,0,1));
+		else
+			gc.setFill(new Color(1,1,0,power/20));
 		gc.fillOval(x+5, y+5, 20, 20);		
 	}
 	
