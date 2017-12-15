@@ -47,6 +47,10 @@ public class SoundThread implements Runnable {
 		this.volume = volume;
 	}
 	public void playSuccess() {
+		/*
+		 * Solution for playing audio clip from pek 2008
+		 * https://stackoverflow.com/questions/26305/how-can-i-play-sound-in-java
+		 */
 		if(!clip.isRunning()){
 			clip.setFramePosition(0);
 			clip.start();
