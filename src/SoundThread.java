@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.net.URL;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -8,8 +9,6 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
-import sun.applet.Main;
 
 /**
  * Used to play generated beeps and success sounds without crackling or replaying before whole sounds have been played
@@ -31,8 +30,8 @@ public class SoundThread implements Runnable {
 		 try {
 				sdl = AudioSystem.getSourceDataLine( af );
 				clip = AudioSystem.getClip();
-		        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-		  	          Main.class.getResourceAsStream("/res/success.wav"));
+				URL url = SoundThread.class.getResource("/res/success.wav"); 
+		        AudioInputStream inputStream = AudioSystem.getAudioInputStream(url);
 		        clip.open(inputStream);
 			
 		    } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {

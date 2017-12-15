@@ -134,9 +134,7 @@ public abstract class Component extends GameObject {
 	 * @param power value to set for the circuit
 	 */
 	private void setPower(float power){
-		System.out.println(getClass() + " a " +power);
 		if(power != this.power){
-			System.out.println(getClass() + " b " +power);
 			this.power = power;
 			if(nextComponent != null)
 				nextComponent.setPower(power);
@@ -162,7 +160,6 @@ public abstract class Component extends GameObject {
 	 */
 	protected float calculatePower(float curPower, Component startNode){
 		if(this == startNode){
-			System.out.println(curPower + " " + this.getClass());
 			if(curPower < 0)
 				curPower = 0;
 			setPower(curPower);
