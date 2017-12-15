@@ -4,6 +4,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -17,6 +18,7 @@ public class SoundThread implements Runnable {
 	private Thread t;
 	private static SoundThread instance;
 	private Clip clip;
+	FloatControl clipVolume;
 	private SoundThread() {
 		af = new AudioFormat( (float )44100, 8, 1, true, false );
 		 try {
@@ -31,6 +33,7 @@ public class SoundThread implements Runnable {
 				e.printStackTrace();
 			}
 		 t = new Thread(instance);
+		 setVolume(0);
 	}
 	public static SoundThread getSoundThread(){
 		if(instance == null)
@@ -45,6 +48,13 @@ public class SoundThread implements Runnable {
 	}
 	public void setVolume(float volume){
 		this.volume = volume;
+		/*
+		 * Solution for changing clip volume from TheBrenny 2013
+		 * https://stackoverflow.com/questions/10650788/how-can-i-play-a-sound-at-a-specified-volume-in-java
+		 */
+		FloatControl cVolume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		float range = (cVolume.getMaximum() - cVolume.getMinimum())/2;
+		cVolume.setValue(volume*range/100 + cVolume.getMinimum() + range);
 	}
 	public void playSuccess() {
 		/*
@@ -71,7 +81,7 @@ public class SoundThread implements Runnable {
 		    sdl.start();
 			for( int i = 0; i < 100 * (float )44100 / 1000; i++ ) {
 		        double angle = i / ( (float )44100 / 440 ) * 2.0 * Math.PI;
-		        buf[ 0 ] = (byte )( Math.sin( angle ) * volume);
+		        buf[ 0 ] = (byte )( Math.sin( angle ) * volume/2);
 		        sdl.write( buf, 0, 1 );
 		    }
 			sdl.drain();

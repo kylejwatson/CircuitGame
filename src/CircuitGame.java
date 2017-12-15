@@ -134,7 +134,6 @@ public class CircuitGame extends Application {
 		slider.setLayoutX(10);
 		slider.setLayoutY(30);
 		slider.valueProperty().addListener(sliderHandler);
-		SoundThread.getSoundThread().setVolume(20);
 		
 		//slider.set
 		root.getChildren().addAll(slider,label);
