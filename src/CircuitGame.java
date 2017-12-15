@@ -101,6 +101,7 @@ public class CircuitGame extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		stage.setTitle("Circuit Professor");
 		Pane root=new Pane();
 		Scene scene=new Scene(root,800,600);
 		stage.setScene(scene);

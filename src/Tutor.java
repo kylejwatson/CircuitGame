@@ -153,6 +153,7 @@ public class Tutor extends GameObject {
 		LessonIF curLessonObj = lessons.get(curLesson);
 		curLessonObj.update(x-180, y+10, gc);
 		if(curLessonObj.goalReached()){
+			SoundThread.getSoundThread().playSuccess();
 			curLesson++;
 			lessons.get(curLesson).init();
 		}

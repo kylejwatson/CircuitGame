@@ -1,7 +1,14 @@
+import java.io.IOException;
+
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+import sun.applet.Main;
 
 public class SoundThread implements Runnable {
 	private SourceDataLine sdl;
@@ -9,12 +16,17 @@ public class SoundThread implements Runnable {
 	private float volume;
 	private Thread t;
 	private static SoundThread instance;
+	private Clip clip;
 	private SoundThread() {
 		af = new AudioFormat( (float )44100, 8, 1, true, false );
 		 try {
 				sdl = AudioSystem.getSourceDataLine( af );
+				clip = AudioSystem.getClip();
+		        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+		  	          Main.class.getResourceAsStream("/res/success.wav"));
+		        clip.open(inputStream);
 			
-		    } catch (LineUnavailableException e) {
+		    } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -33,6 +45,12 @@ public class SoundThread implements Runnable {
 	}
 	public void setVolume(float volume){
 		this.volume = volume;
+	}
+	public void playSuccess() {
+		if(!clip.isRunning()){
+			clip.setFramePosition(0);
+			clip.start();
+		}
 	}
 	@Override
 	public void run() {
